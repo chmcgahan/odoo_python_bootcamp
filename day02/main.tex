@@ -1,0 +1,361 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+
+\geometry{margin=2.5cm}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Python Bootcamp - OOP}
+\lhead{\textit{Object-Oriented Adventure}}
+\rfoot{\thepage}
+
+\titleformat{\section}[block]{\normalfont\Large\bfseries\color{blue}}{\thesection.}{1em}{}
+\titleformat{\subsection}[block]{\normalfont\large\bfseries\color{cyan!70!black}}{\thesubsection.}{1em}{}
+
+% Document Title
+\title{\Huge\textbf{Object-Oriented Python}}
+\author{Your Trusty Instructor}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction to Object-Oriented Programming (OOP)}
+
+Object-Oriented Programming is a paradigm focused on modeling software as a collection of objects. Objects can represent real-world entities, concepts, or even abstract ideas.
+
+Each object has:
+\begin{itemize}
+  \item \textbf{State}: The data or attributes the object holds (e.g., name, age).
+  \item \textbf{Behavior}: The actions or methods it can perform (e.g., drive, jump).
+\end{itemize}
+
+\section{Key Concepts}
+
+\subsection{Classes and Objects}
+\begin{itemize}
+  \item A \textbf{class} is like an architect's blueprint.
+  \item An \textbf{object} is an actual house built using that blueprint.
+\end{itemize}
+
+Example naming convention: \texttt{PascalCase} (e.g., \texttt{MyAwesomeClass}). Always start each word with a capital letter.
+
+\subsection{The \texttt{self} Keyword and \texttt{\_\_init\_\_} Method}
+The \texttt{self} keyword refers to the instance itself.
+
+The \texttt{\_\_init\_\_} method initializes the attributes of the object.
+
+\begin{lstlisting}[language=Python]
+class Car:
+    def __init__(self, brand, model, max_speed=0):
+        self.brand = brand
+        self.model = model
+        self.max_speed = max_speed
+\end{lstlisting}
+
+\subsection{Attributes and Default Values}
+You can set default values in \texttt{\_\_init\_\_} parameters.\newline
+
+Example:
+\begin{lstlisting}[language=Python]
+class Car:
+    def __init__(self, speed=0):
+        self.speed = speed
+\end{lstlisting}
+
+\section{The Data Model}
+Special attributes (called dunder methods) allow interaction with Python internals.
+
+Examples:
+\begin{itemize}
+  \item \texttt{\_\_str\_\_}: Defines string representation (for \texttt{print()})
+  \item \texttt{\_\_repr\_\_}: Defines unambiguous string representation
+  \item \texttt{\_\_eq\_\_}: Defines equality comparison
+\end{itemize}
+
+\subsection{Example}
+\begin{lstlisting}[language=Python]
+class Car:
+    def __init__(self, brand, model, max_speed, min_speed):
+        self.brand = brand
+        self.model = model
+        self.max_speed = max_speed
+        self.min_speed = min_speed
+
+    def __str__(self):
+        return f"{self.brand} {self.model} {self.max_speed} {self.min_speed}"
+
+    def __eq__(self, other):
+        return self.brand == other.brand and self.model == other.model
+\end{lstlisting}
+
+\section{Inheritance}
+Inheritance lets you define a new class based on an existing one.
+
+\begin{lstlisting}[language=Python]
+class Vehicle:
+    def __init__(self, type_of_vehicle):
+        self.type_of_vehicle = type_of_vehicle
+
+class Car(Vehicle):
+    def __init__(self, brand, model):
+        super().__init__("Car")
+        self.brand = brand
+        self.model = model
+\end{lstlisting}
+
+\section*{Summary}
+OOP in Python helps you build modular, scalable, and reusable code. Get comfortable with classes, objects, encapsulation, dunder methods, and inheritance to unlock powerful design capabilities.
+
+\newpage
+\section{Day 02 — Object-Oriented Exercises}
+
+\subsection*{Exercise 00 — Create a Professor Class}
+\textbf{Directory:} \texttt{day02/ex00/}\\
+\textbf{Files to submit:} \texttt{professor.py}\\
+\textbf{Goal:} Define your first simple class with attributes.
+
+\textbf{Task:}
+\begin{itemize}
+  \item Create a class \texttt{Professor}.
+  \item The class must have attributes: \texttt{first\_name}, \texttt{last\_name}, and \texttt{age}.
+  \item Define an \texttt{\_\_init\_\_} method to set these attributes.
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}[language=Python]
+prof = Professor("John", "Doe", 45)
+print(prof.first_name)  # John
+print(prof.last_name)   # Doe
+print(prof.age)         # 45
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What happens if you forget to use \texttt{self} in your class methods?
+  \item How can you add default values to some attributes?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 01 — Car Class with Acceleration and Braking}
+\textbf{Directory:} \texttt{day02/ex01/}\\
+\textbf{Files to submit:} \texttt{car.py}\\
+\textbf{Goal:} Build a class with attributes and methods to modify its internal state.
+
+\textbf{Task:}
+\begin{itemize}
+  \item Create a class \texttt{Car}.
+  \item Attributes: \texttt{brand}, \texttt{model}, \texttt{max\_speed}, \texttt{min\_speed}, \texttt{speed} (default 0).
+  \item Methods:
+  \begin{itemize}
+    \item \texttt{accelerate}: Increases the speed by 50, without exceeding \texttt{max\_speed}.
+    \item \texttt{brake}: Decreases the speed by 50, without going below \texttt{min\_speed}.
+  \end{itemize}
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}[language=Python]
+car = Car("Peugeot", "308", 180, -30)
+print(car.speed)  # 0
+car.accelerate()
+print(car.speed)  # 50
+car.accelerate()
+print(car.speed)  # 100
+car.brake()
+print(car.speed)  # 50
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item Why is it important to add limits on acceleration and braking?
+  \item How could you make the increase or decrease amounts adjustable?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 02 — The Book}
+\textbf{Directory:} \texttt{day02/ex02/}\\
+\textbf{Files to submit:} \texttt{book.py}, \texttt{recipe.py}, \texttt{test.py}\\
+\textbf{Goal:} Get familiar with creating multiple classes and interacting with their objects.
+
+\textbf{Task:}
+\begin{itemize}
+  \item Implement two classes: \texttt{Book} (in \texttt{book.py}) and \texttt{Recipe} (in \texttt{recipe.py}).
+  \item Create a \texttt{test.py} file to test your classes.
+\end{itemize}
+
+\textbf{Recipe Class Attributes:}
+\begin{itemize}
+  \item \texttt{name} (str): Name of the recipe.
+  \item \texttt{cooking\_lvl} (int): Cooking level (1 to 5).
+  \item \texttt{cooking\_time} (int): In minutes (must not be negative).
+  \item \texttt{ingredients} (list): List of strings.
+  \item \texttt{description} (str): (Optional) Description of the recipe.
+  \item \texttt{recipe\_type} (str): Either \texttt{"starter"}, \texttt{"lunch"}, or \texttt{"dessert"}.
+\end{itemize}
+
+\textbf{Recipe Class Requirements:}
+\begin{itemize}
+  \item Validate input on creation.
+  \item Implement the \texttt{\_\_str\_\_} method to format the recipe info.
+\end{itemize}
+
+\textbf{Book Class Attributes:}
+\begin{itemize}
+  \item \texttt{name} (str): Name of the book.
+  \item \texttt{last\_update} (datetime): Date of the last update.
+  \item \texttt{creation\_date} (datetime): Creation date.
+  \item \texttt{recipes\_list} (dict): Dictionary with keys \texttt{"starter"}, \texttt{"lunch"}, and \texttt{"dessert"}.
+\end{itemize}
+
+\textbf{Book Class Methods:}
+\begin{itemize}
+  \item \texttt{get\_recipe\_by\_name(name)}: Prints and returns a recipe matching the name.
+  \item \texttt{get\_recipes\_by\_types(recipe\_type)}: Returns all recipe names of the given type.
+  \item \texttt{add\_recipe(recipe)}: Adds a recipe and updates \texttt{last\_update}.
+\end{itemize}
+
+\textbf{Testing Instructions:}
+\begin{itemize}
+  \item Create your test file \texttt{test.py}.
+  \item Import the classes using:
+  \begin{lstlisting}[language=Python]
+from book import Book
+from recipe import Recipe
+  \end{lstlisting}
+  \item Test your classes and methods thoroughly.
+\end{itemize}
+
+\textbf{Important:} Validate inputs carefully and exit gracefully on errors. The description in \texttt{Recipe} can be empty, but all other fields must be correctly validated.
+
+\newpage
+\subsection*{Exercise 03 — Family Tree}
+\textbf{Directory:} \texttt{day02/ex03/}\\
+\textbf{Files to submit:} \texttt{game.py}\\
+\textbf{Goal:} Practice inheritance between classes.
+
+\textbf{Task:}
+\begin{itemize}
+  \item Create a class \texttt{GotCharacter} with attributes:
+  \begin{itemize}
+    \item \texttt{first\_name}
+    \item \texttt{is\_alive} (default \texttt{True})
+  \end{itemize}
+
+  \item Create a child class for a GoT house (example: \texttt{Stark}) that inherits from \texttt{GotCharacter}.
+  \item Add attributes to the child class:
+  \begin{itemize}
+    \item \texttt{family\_name} (default value matching the class name)
+    \item \texttt{house\_words} (e.g., \texttt{"Winter is Coming"})
+  \end{itemize}
+
+  \item Implement two methods:
+  \begin{itemize}
+    \item \texttt{print\_house\_words}: Prints the House words.
+    \item \texttt{die}: Sets \texttt{is\_alive} to \texttt{False}.
+  \end{itemize}
+
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}[language=Python]
+from game import Stark
+arya = Stark("Arya")
+print(arya.__dict__)
+# {'first_name': 'Arya', 'is_alive': True, 'family_name': 'Stark', 'house_words': 'Winter is Coming'}
+arya.print_house_words()
+# Winter is Coming
+print(arya.is_alive)
+# True
+arya.die()
+print(arya.is_alive)
+# False
+\end{lstlisting}
+
+\textbf{Additional Instructions:}
+\begin{itemize}
+  \item Provide a docstring for the child class (example: "A class representing the Stark family. Or when bad things happen to good people.").
+  \item Feel free to create other child classes from \texttt{GotCharacter}.
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 04 — Watch out for the sale people!}
+\textbf{Directory:} \texttt{day01/ex10/}\\
+\textbf{Files to submit:} \texttt{sales\_energy.py}\\
+\textbf{Goal:} Model and simulate a chain reaction of excited salespeople in the open office ... you know how it can be. Ding ding ding goes the bell.
+
+\textbf It is your presales day and all the sales are therein their 10x10 open space. Each salesperson has an “energy level” — when they get too excited (energy > 9), they scream and energize their neighbors (including diagonals). This continues until no one new screams.
+
+At each step:
+\begin{itemize}
+  \item Each salesperson gains 1 energy.
+  \item Any person whose energy goes above 9 "screams".
+  \item Screaming gives +1 energy to each adjacent neighbor (including diagonals).
+  \item A salesperson can only scream once per step.
+  \item Once the step ends, all screamers reset their energy to 0.
+\end{itemize}
+
+Your program should:
+\begin{itemize}
+  \item Simulate one or more steps of this behavior.
+  \item Return the number of "screams" at each step.
+  \item Detect if there’s a moment when all salespeople scream at once.
+  \item All of this using objects where you see it convenient
+\end{itemize}
+
+\textbf{Input:} A 10x10 grid of digits (as strings), where each digit is the initial energy level of one salesperson.
+
+\textbf{Input:}
+\begin{lstlisting}
+5483143223
+2745854711
+5264556173
+6141336146
+6357385478
+4167524645
+2176841721
+6882881134
+4846848554
+5283751526
+\end{lstlisting}
+
+To make it more understandable:
+
+Before any steps:
+\begin{lstlisting}
+11111
+19991
+19191
+19991
+11111
+\end{lstlisting}
+
+After step 1:
+\begin{lstlisting}
+34543
+40004
+50005
+40004
+34543
+\end{lstlisting}
+
+After step 2:
+\begin{lstlisting}
+45654
+51115
+61116
+51115
+45654
+\end{lstlisting}
+
+Given the starting energy levels of the salepeoples in your open office, simulate 100 steps. How many total screams are there after 100 steps?
+\end{document}
