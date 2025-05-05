@@ -1,0 +1,597 @@
+\documentclass[12pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+
+% Geometry setup
+\geometry{margin=2.5cm}
+
+% Colors and Listings Setup
+\definecolor{codegray}{gray}{0.9}
+\lstset{
+  backgroundcolor=\color{codegray},
+  basicstyle=\ttfamily\footnotesize,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+% Fancy header/footer setup
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Odoo Python Bootcamp}
+\lhead{\textit{One step at a time!}}
+\rfoot{\thepage}
+\lfoot{[This is a great footer. The greatest, even.]}
+
+% Section title styling
+\titleformat{\section}[block]{\normalfont\Large\bfseries\color{blue}}{\thesection.}{1em}{}
+\titleformat{\subsection}[block]{\normalfont\large\bfseries\color{cyan!70!black}}{\thesubsection.}{1em}{}
+
+% Document Title
+\title{\Huge\textbf{Odoo Python Bootcamp} \\[1ex]
+\Large A journey from zero to +NaN, one loop at a time}
+\author{From PS-Tech with love}
+
+\begin{document}
+
+\maketitle
+
+\section*{Welcome !}
+Pack your towel, and welcome to the coding bootcamp designed just for you — the functional masterminds who are about to conquer the world of scripting, automation, and backend wizardry. Whether you've dabbled in Excel macros, peeked at a Python file, or just heard the word \texttt{"terminal"} in the wild, you're in the right place.
+
+\section*{Day 0 — Setup \& Survival Guide}
+\textbf{Here's what you need to get started:}
+\begin{itemize}
+  \item Python 3.9 or higher (run \texttt{python3 --version} to check)
+  \item A GitHub account
+  \item Terminal
+  \item VS Code or any text editor (Chads go for VIM)
+  \item Internet, curiosity, and some gnack
+\end{itemize}
+
+\subsection*{Folder structure}
+Organize your work like this:
+\begin{lstlisting}
+bootcamp/
+|__ day01/
+    |__ ex00_hello.py
+    |__ ex01_loop.py
+    |__ ...
+|__ day02/
+    |__ ...
+\end{lstlisting}
+
+\subsection*{Git Rules of Engagement}
+\begin{itemize}
+  \item One repo per participant
+  \item One commit per exercise (at least!)
+  \item Clean, readable commit messages (e.g. \texttt{feat: ex01 completed})
+\end{itemize}
+
+\subsection*{How to submit}
+Create a repository on Github, clone it locally using the ssh link, and after each correct exercise you can push it like this.
+\begin{lstlisting}
+git add .
+git commit -m "done exo 00 - that was easy man"
+git push origin main
+\end{lstlisting}
+
+\vspace{0.5em}
+You will share your GitHub link with the reviewer (or with OdooFisherBot 9000 if we ever automate it).
+
+You may be like "Ye sure... what are we supposed to do with this ?" at the moment but in a few hours from now, it'll be clearer !
+
+\newpage
+
+\section{Day 01 — Morning: Shell Games}
+
+Learning to use the terminal is like getting access to the command center of your computer. It empowers you to navigate, automate, and manage your environment like a true developer. In this morning session, you'll get comfortable with essential shell commands that you'll rely on daily as a developer.
+
+Each command you run today should be saved into a corresponding file ending in \texttt{.sh}. These script files will serve as proof of work for the review happening at the end of the day, and give you a foundation for writing repeatable, automatable tasks.
+
+\newpage
+\subsection*{Exercise 00 — First Contact}
+\textbf{Goal:} Learn to navigate and manipulate the filesystem.\\
+\textbf{Command concepts:} \texttt{mkdir}, \texttt{cd}, \texttt{touch}, \texttt{ls}, \texttt{pwd}
+
+\textbf{Task:}
+\begin{itemize}
+  \item Create a directory \texttt{sandbox} and navigate into it.
+  \item Inside it, create an empty file named \texttt{test.txt}.
+  \item List all contents in the directory.
+  \item Print the current working directory.
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> sh first_contact.sh
+sandbox/
+test.txt
+/home/student/sandbox
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What do `.` and `..` represent?
+  \item What does `/` mean at the start of a path?
+  \item What happens if you run `touch` on a file that already exists?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 01 — Who are you, really?}
+\textbf{Goal:} Superficial dive into your deep identity (and some more commands).\\
+\textbf{Command concepts:} \texttt{whoami}, \texttt{pwd}, \texttt{echo}
+
+\textbf{Task:} Print this message in one line:
+\begin{lstlisting}
+Hello, I am USERNAME and I'm currently in /your/path
+\end{lstlisting}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> sh whoami_path.sh
+Hello, I am chmg and I'm currently in /Users/chmg/bootcamp/day01
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item How can you view hidden files or folders in a directory?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 02 — I'm counting on you}
+\textbf{Goal:} Find and count files.\\
+\textbf{Command concepts:} \texttt{find}, \texttt{wc}, \texttt{grep}, \texttt{| (pipe)}
+
+\textbf{Task:}
+\begin{itemize}
+  \item In your current directory, search for all Python files recursively.
+  \item Count how many you find and print the total.
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> sh count_pyfiles.sh
+There are 7 Python files in this directory.
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What does the `-name` flag do in `find`?
+  \item What does `wc -l` actually count?
+  \item How would you modify the command to search for `.txt` files instead?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 03 — Alias or die trying}
+\textbf{Goal:} Create your first useful shell alias.
+\textbf{Command concepts:} \texttt{alias}, \texttt{.bashrc}, \texttt{.zshrc}
+
+\textbf{Task:}
+\begin{itemize}
+  \item Create an alias named \texttt{gpush} that runs:
+  \begin{lstlisting}
+  git add . && git commit -m "autosave" && git push
+  \end{lstlisting}
+  \item OPTIONAL: Make the alias available permanently in your shell configuration file.
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> gpush
+[main 1234abc] autosave
+ 1 file changed, 2 insertions(+)
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What does `source ~/.zshrc` do?
+  \item What is the difference between '\&\&' and ';' ?
+  \item How do you remove an alias?
+  \item Can you override an existing shell command with an alias?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 04 — Wild Wild Permissions}
+\textbf{Goal:} Understand and manipulate file permissions.
+\textbf{Command concepts:} \texttt{chmod}, \texttt{ls -l}
+
+\textbf{Task:}
+\begin{itemize}
+  \item Create a script that prints "Permissions test".
+  \item Remove its execute permission, try to run it, and observe the error.
+  \item Restore execute permission and run it again successfully.
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> sh perm_test.sh
+sh: perm_test.sh: Permission denied
+$> chmod +x perm_test.sh
+$> ./perm_test.sh
+Permissions test
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What do the permission flags `rwx` mean?
+  \item What are the differences between `chmod +x` and `chmod 755`?
+  \item How can you view detailed file permissions for all files in a directory?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 05 — Script it like it's hot}
+\textbf{Goal:} Write and run your first shell script.
+\textbf{Command concepts:} \texttt{bash}, \texttt{\#!/bin/bash}, \texttt{\$1}
+
+\textbf{Task:}
+\begin{itemize}
+  \item Create a script called \texttt{greet.sh}.
+  \item It should take one argument (a name) and greet the user.
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> ./greet.sh Charlie
+Hello, Charlie! Welcome to the bootcamp.
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What happens if you run the script without an argument?
+  \item How can you make a script executable without using `bash` or `sh` explicitly?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 06 — Restore me if you can}
+
+Now we're talking ! Using many concepts we've discovered before, let's do a real script that will help us on our daily lives as Odoo devs.\\
+\\
+\textbf{Directory:} \texttt{day01/ex04/}\\
+\textbf{Files to submit:} \texttt{restore.sh}\\
+\textbf{Forbidden:} None\\
+\textbf{Goal:} Combine file manipulation, archive handling, and automation with scripting.
+
+\textbf{Task:} You are given a compressed archive containing a file named \texttt{dump.sql}. Your job is to:
+\begin{itemize}
+  \item Unzip the archive (name will be provided during the session)
+  \item Locate the \texttt{dump.sql} file inside it
+  \item Move it into a folder named \texttt{restored/} (create it if necessary)
+  \item Call a provided script \texttt{restore\_db.sh} that will take \texttt{dump.sql} and restore it into a database
+  \item Call a second provided script that will alter the DB to give you an easy access as an admin user
+\end{itemize}
+Make your script reproducible and idempotent (i.e., running it multiple times should not break things).
+
+\textbf{Example:}
+\begin{lstlisting}
+$> sh restore.sh archive.zip
+Unzipping archive.zip ...
+Moving dump.sql to ~/dumps/. ...
+Restoring database from dump.sql ...
+Altering it to provide an easy admin access...
+Done.
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What does the \texttt{unzip} command do?
+  \item How can you check if a folder exists before creating it?
+  \item How would you make your script fail gracefully if the archive or the dump file is missing?
+\end{itemize}
+
+
+\newpage
+\section{Day 01 — Afternoon: Hello, Python!}
+
+Now that you're friends with your terminal, it's time to meet Python. This afternoon session will ease you into Python scripting with progressively trickier exercises that play with strings, types, functions, and user interaction.
+
+Each script should be saved in the appropriate folder (e.g., \texttt{day01/ex00/hello.py}) and committed to your GitHub repository. Don't forget to test your scripts with real input and edge cases.
+
+\newpage
+\subsection*{Exercise 00 — Rev Alpha}
+\textbf{Directory:} \texttt{day01/ex00/}\\
+\textbf{Files to submit:} \texttt{exec.py}\\
+\textbf{Forbidden:} None\\
+\textbf{Goal:} Work with command-line arguments, string reversal, and case swapping.
+
+\textbf{Task:} Make a script that:
+\begin{itemize}
+  \item Takes one or more strings as arguments
+  \item Merges them into one string with spaces between them
+  \item Reverses the string and swaps the case of each letter
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> python3 exec.py 'Hello World!'
+!DLROw OLLEh
+$> python3 exec.py 'Hello' 'my Friend'
+DNEIRf YM OLLEh
+$> python3 exec.py
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What does `sys.argv` contain?
+  \item What happens if you run the script with no arguments?
+  \item How could you make the output always end with a newline?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 01 — The Odd, the Even and the Zero}
+\textbf{Directory:} \texttt{day01/ex01/}\\
+\textbf{Files to submit:} \texttt{whois.py}\\
+\textbf{Forbidden:} None\\
+\textbf{Goal:} Practice type conversion, basic conditionals, some errors handling.
+
+\textbf{Task:} Make a script that:
+\begin{itemize}
+  \item Takes a single integer argument
+  \item Prints if it's Odd, Even or Zero
+  \item Rejects multiple arguments or non-integers with an error
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> python3 whois.py 12
+I'm Even.
+$> python3 whois.py 0
+I'm Zero.
+$> python3 whois.py 3
+I'm Odd.
+$> python3 whois.py Hello
+AssertionError: argument is not an integer
+$> python3 whois.py 12 3
+AssertionError: more than one argument are provided
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item How can you check if a string is an integer?
+  \item What is the difference between `==` and `is` in Python?
+  \item What happens if you use modulo with a negative number?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 02 — Functional file}
+\textbf{Directory:} \texttt{day01/ex02/}\\
+\textbf{Files to submit:} \texttt{count.py}\\
+\textbf{Forbidden:} None\\
+\textbf{Goal:} Practice writing functions, string analysis, and the use of \texttt{\_\_name\_\_ == '\_\_main\_\_'}.
+
+
+\textbf{Task:}
+\begin{itemize}
+  \item Write a function called \texttt{text\_analyzer} that takes a string and prints:
+  \begin{itemize}
+    \item Total number of characters
+    \item Number of upper- and lowercase letters
+    \item Number of spaces and punctuation marks
+  \end{itemize}
+  \item If the string is not provided or not a string, handle errors appropriately.
+  \item Include a docstring that describes what your function does.
+  \item Use \texttt{if \_\_name\_\_ == "\_\_main\_\_"} to make your script executable and testable.
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> python3 count.py "Blazing Fast Odoo!"
+The text contains 18 character(s):
+- 3 upper letter(s)
+- 12 lower letter(s)
+- 1 punctuation mark(s)
+- 2 space(s)
+$> python3 count.py
+What is the text to analyze?
+>> Ciaooo
+The text contains 6 character(s):
+- 1 upper letter(s)
+- 5 lower letter(s)
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What does \texttt{\_\_name\_\_ == '\_\_main\_\_'} allow you to do?
+  \item How can you identify punctuation with built-in Python modules?
+  \item Why is it good practice to write reusable functions instead of printing directly?
+  \item What is the difference between a SCRIPT, a FUNCTION, and a PROGRAM ?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 03 — Read Me Like a Book}
+\textbf{Directory:} \texttt{day01/ex09/}\\
+\textbf{Files to submit:} \texttt{readwrite.py}\\
+\textbf{Goal:} Learn how to read from and write to text files.
+
+\textbf{Task:}
+\begin{itemize}
+  \item Create a script that reads from its first argument, capitalize every word in the file and
+  \item Save the result to a new file called as its second argument.
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> cat input.txt
+this is a sample file
+$> python3 readwrite.py input.txt output.txt
+$> cat output.txt
+This Is A Sample File
+\end{lstlisting}
+
+\newpage
+\subsection*{Exercise 04 — Greet Everyone}
+\textbf{Directory:} \texttt{day01/ex09/}\\
+\textbf{Files to submit:} \texttt{greetings.py}\\
+\textbf{Goal:} Practice using variable arguments (*args) and handling command-line input.
+
+\textbf{Task:} Write a script with a function \texttt{greet\_everyone(*names)} that:
+\begin{itemize}
+  \item Takes multiple names as arguments (via \texttt{*args})
+  \item Prints "Hello \textit{name}!" for each one
+  \item Returns the total number of people greeted
+  \item Also prints the number of people greeted at the end of the script if run directly
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> python3 greetings.py FP WIS CHMG
+Hello FP!
+Hello WIS!
+Hello CHMG!
+3
+
+$> python3 greetings.py
+0
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What are the advantages of using \texttt{*args}?
+  \item How can you detect if no arguments are passed?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 05 — Count Records in CSV}
+\textbf{Directory:} \texttt{day01/ex06/}\\
+\textbf{Files to submit:} \texttt{csv\_counter.py}\\
+\textbf{Goal:} Learn to read from CSV files and count rows using Python.
+
+\textbf{Task:} Write a PROGRAM \texttt{count\_records\_in\_csv(file\_path)} that:
+\begin{itemize}
+  \item Takes the path to a CSV file as input (via command-line argument)
+  \item Returns how many data rows the file contains (excluding the header, if any)
+  \item Ignores completely empty lines (even between or after data)
+\end{itemize}
+Also write the necessary script logic so the script works from the terminal.
+
+\textbf{Example:}
+\begin{lstlisting}
+$> python3 csv_counter.py test.csv
+3
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item What is the purpose of \texttt{if \_\_name\_\_ == \"\_\_main\_\_\"}?
+  \item How would you handle CSVs that use different delimiters (for example semicolons instead of commas)?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 06 — S.O.S}
+\textbf{Directory:} \texttt{day01/ex07/}\\
+\textbf{Files to submit:} \texttt{sos.py}\\
+\textbf{Goal:} Encode a string into Morse code using dictionary mapping.
+
+\textbf{Task:} Create a program that takes one or more string arguments and encodes them into Morse code.
+\begin{itemize}
+  \item Accept alphanumeric characters and spaces only
+  \item Merge all arguments into a single string with spaces between them
+  \item Convert each alphanumeric character to its Morse equivalent
+  \item Separate Morse characters with spaces
+  \item Use `/` to represent space characters between words
+  \item If no argument is given, do nothing.
+  \item If unsupported characters (like `/`) are passed in input, print an error
+\end{itemize}
+
+\textbf{Hint:} Look up how to use a Python \texttt{dictionary} to map letters and digits to Morse code.
+
+\textbf{Example:}
+\begin{lstlisting}
+$> python3 sos.py "SOS"
+... --- ...
+
+$> python3 sos.py
+#
+
+$> python3 sos.py "HELLO / WORLD"
+ERROR
+
+$> python3 sos.py "SHOW ME THE MONEY" "LEBOWSKY"
+... .... --- .-- / -- . / - .... . / -- --- -. . -.-- / .-.. . -... --- .-- ... -.- -.--  
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item How do you efficiently look up a value for each character in a string?
+  \item What would you change to decode Morse back into normal text?
+  \item Can you ensure lowercase input also works without modifying the dictionary?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 07 — Draw Me a Diamond}
+\textbf{Directory:} \texttt{day01/ex08/}\\
+\textbf{Files to submit:} \texttt{diamond.py}\\
+\textbf{Goal:} Practice nested loops and string formatting.
+
+\textbf{Task:} Write a script that asks for an odd integer and prints a diamond shape using asterisks `*`.
+\begin{itemize}
+  \item The widest line of the diamond should have `n` stars (where `n` is the number given)
+  \item Each upper and lower row should be centered and symmetrical
+  \item If the number is even or invalid, print an error message
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+$> python3 diamond.py 5
+  *
+ ***
+*****
+ ***
+  *
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item How can you use string multiplication and padding to create patterns?
+  \item How would you handle invalid inputs (negative numbers, even numbers, etc.)?
+  \item Could you adapt it to print other shapes (pyramids, hourglasses)?
+\end{itemize}
+
+\newpage
+\subsection*{Exercise 08 — Sudoku Solver (Easy Grid)}
+\textbf{Directory:} \texttt{day01/ex09/}\\
+\textbf{Files to submit:} \texttt{sudoku.py}\\
+\textbf{Goal:} Implement logic, backtracking, and recursive problem solving. Let's do it in pseudo code first, you'll need your group for it.
+
+\textbf{Task:} Build a basic Sudoku solver for a 4x4 grid. Or go directly for the classic 9x9, you should able to do it ! I trust you :D
+\begin{itemize}
+  \item The board is represented as a list of lists (4x4), with 0 indicating empty cells
+  \item Valid numbers are 1–4, each must appear once per row, column, and 2x2 square
+  \item Use recursion and backtracking (google it up) to solve the puzzle
+\end{itemize}
+
+\textbf{Hint:} A Sudoku is a constraint satisfaction problem — only place values that are valid at a given step.
+
+\textbf{Example:}
+\begin{lstlisting}
+initial_board = [
+  [1, 0, 0, 4],
+  [0, 0, 0, 0],
+  [4, 0, 0, 1],
+  [0, 1, 0, 0],
+]
+
+# after solving...
+# [1, 2, 3, 4]
+# [3, 4, 1, 2]
+# [4, 3, 2, 1]
+# [2, 1, 4, 3]
+\end{lstlisting}
+
+\textbf{Extra questions:}
+\begin{itemize}
+  \item Can you implement checks to validate user-input boards?
+  \item How would you measure the complexity or steps used by your solver?
+\end{itemize}
+
+\end{document}
