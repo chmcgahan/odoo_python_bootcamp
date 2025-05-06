@@ -7,70 +7,111 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Authenticate with Spotify
-sp = Spotify(auth_manager=SpotifyClientCredentials(
-    client_id=os.getenv("SPOTIPY_CLIENT_ID"),
-    client_secret=os.getenv("SPOTIPY_CLIENT_SECRET")
-))
+class Track:
+    def __init__(self, artist: str, name: str):
+        self.artist = artist
+        self.name = name
 
-# Playlist ID to fetch tracks from
-# PLAYLIST_ID = "4RVNd8UwGiAqzfPjbgv0O3" #kasabian
-PLAYLIST_ID = "5orZL8SetQM1LR3pMXZMOa" #random top 100
+    def __str__(self):
+        return f"{self.artist} - {self.name}"
 
-# Get playlist tracks
-def get_tracks(playlist_id):
-    results = sp.playlist_items(playlist_id)
-    tracks = []
-    for item in results['items']:
-        track = item['track']
-        if track:
-            name = track['name']
-            artist = track['artists'][0]['name']
-            tracks.append((artist, name))
-    return tracks
+class SpotifyDownloader:
+    def __init__(self, playlist_id: str):
+        self.playlist_id = playlist_id
+        self.sp = Spotify(auth_manager=SpotifyClientCredentials(
+            client_id=os.getenv("SPOTIPY_CLIENT_ID"),
+            client_secret=os.getenv("SPOTIPY_CLIENT_SECRET")
+        ))
 
-# Let user select a track
-def choose_track(tracks):
-    print("\nAvailable tracks:")
-    for i, (artist, name) in enumerate(tracks):
-        print(f"{i + 1}. {artist} - {name}")
+    def get_tracks(self):
+        results = self.sp.playlist_items(self.playlist_id)
+        tracks = []
+        for item in results['items']:
+            track_data = item.get('track')
+            if track_data:
+                name = track_data['name']
+                artist = track_data['artists'][0]['name']
+                tracks.append(Track(artist, name))
+        return tracks
 
-    while True:
-        try:
-            choice = int(input("\nEnter the number of the track to download (0 to quit): "))
-            if choice == 0:
-                return None
-            if 1 <= choice <= len(tracks):
-                return tracks[choice - 1]
-            else:
-                print("Invalid number.")
-        except ValueError:
-            print("Please enter a number.")
+    def choose_track(self, tracks):
+        print("\nAvailable tracks:")
+        for i, track in enumerate(tracks):
+            print(f"{i + 1}. {track}")
 
-def download_track(artist, name):
-    query = f"ytsearch1:{artist} {name}"
-    filename = f"downloads/{artist} - {name}.mp3"
-    os.makedirs("downloads", exist_ok=True)
-    print(f"\nDownloading: {artist} - {name}")
-    subprocess.run([
-        'yt-dlp', '-x', '--audio-format', 'mp3',
-        '-o', filename,
-        query
-    ])
-    print(f"Saved to {filename}")
+        while True:
+            try:
+                choice = int(input("\nEnter the number of the track to download (0 to quit): "))
+                if choice == 0:
+                    return None
+                if 1 <= choice <= len(tracks):
+                    return tracks[choice - 1]
+                else:
+                    print("Invalid number.")
+            except ValueError:
+                print("Please enter a number.")
 
-# Main loop
+    def download_track(self, track: Track):
+        query = f"ytsearch1:{track.artist} {track.name}"
+        filename = f"downloads/{track.artist} - {track.name}.mp3"
+        os.makedirs("downloads", exist_ok=True)
+        print(f"\nDownloading: {track}")
+        subprocess.run([
+            'yt-dlp', '--quiet', '-x', '--audio-format', 'mp3',
+            '-o', filename,
+            query
+        ])
+        print(f"Saved to {filename}")
+
 def main():
     print("=== Spotify Playlist Downloader ===")
-    tracks = get_tracks(PLAYLIST_ID)
+
+    # Change this ID for other playlists
+    playlist_id = "5orZL8SetQM1LR3pMXZMOa"
+    
+    downloader = SpotifyDownloader(playlist_id)
+
+    tracks = downloader.get_tracks()
 
     while True:
-        selected = choose_track(tracks)
-        if not selected:
+        selected_track = downloader.choose_track(tracks)
+        if not selected_track:
             print("Goodbye!")
             break
-        artist, name = selected
-        download_track(artist, name)
+        downloader.download_track(selected_track)
 
 if __name__ == "__main__":
     main()
+
+
+# === EXOS ===
+
+# Add a loop to download several tracks in a row OR
+# Let users choose multiple tracks one after another before quitting.
+
+# Create a Playlist class
+# That holds the list of Track objects and a method like show_downloaded_tracks() to see what has already been downloaded
+
+# Add a display_name() method to Track
+# To centralize how we show a track (instead of formatting everywhere).
+
+# Ask the user for the playlist URL
+# Instead of hardcoding it, let the user paste a link.
+
+# Sort tracks alphabetically before displaying them
+# Practice sorting and working with lists of objects.
+
+# Add a confirmation before downloading
+# A simple Are you sure? (y/n) prompt after selection.
+
+# Count and show how many tracks are in the playlist
+# Add a .count() method or just print len(tracks).
+
+# Show a progress message while downloading
+# Something like Downloading 1 of 3: Artist - Track.
+
+# Save downloaded track info in a text file
+# Like downloaded.txt to practice working with files.
+
+# Create a simple logo or header printed with ASCII art
+# For fun, and to make the script feel more personal.
