@@ -1,0 +1,49 @@
+# General Functional Checks
+
+What happens when you install only the 'estate_account' module without 'estate'?
+What are the states of a property, and what triggers each transition?
+What happens when you try to cancel a property that's already sold? Why?
+What happens when two users create offers on the same property?
+
+# Computed Fields and Business Logic
+How is the 'best_price' field computed on a property?
+What happens to 'best_price' when all offers are deleted?
+Change the compute method for 'total_area' to use a different formula. What changes in the UI?
+What happens if you remove the @api.depends on a computed field like 'total_area'?
+Add a new computed field 'price_per_m2' based on 'living_area' and see how it reacts to changes.
+What happens if you modify 'expected_price'—does it recompute related fields? Why?
+What would happen if you computed 'state' based on other fields instead of storing it?
+Try making 'best_price' store=True. What changes in behavior or performance?
+
+# Actions and Buttons
+What does the 'action_sold' method do? What conditions does it check before executing?
+Try triggering 'action_sold' on a canceled property. What happens and why?
+Can you create a property directly in the 'sold' state from the form view?
+Add a new button to mark a property as 'ready for offer' and connect it to a method that changes the state.
+Explore what happens when you click 'Refuse' or 'Accept' on an offer. How are those methods implemented?
+Modify the 'action_refuse' method to automatically send a notification. How would you test this?
+What happens if two buttons try to update the same state field simultaneously? Try it and check.
+Add a server action to reset a property to 'new'. How can you make it available in the UI?
+
+# Model Relationships and Dependencies
+How is the relation between property and offer implemented?
+What would change if 'tag_ids' were Many2one instead of Many2many? (don't do it it will just break the db)
+Add a related field on 'estate.property.offer' to show 'property_type_id' from its property.
+What happens to offers if the related property is deleted?
+Explore how changing the 'buyer_id' affects record creation or validation.
+
+# Access Rights and Users
+What access rights do users have on offers and how are they enforced?
+
+# Views and UI Behavior
+Change the form view to show 'best_price' next to 'expected_price'. How does it help the user?
+Add conditional visibility to the 'buyer_id' field using attrs based on the state.
+Add a kanban view for properties and group them by state.
+What does 'editable=bottom' do in the offer list view? Try removing it and observe.
+
+# Extension and Inheritance
+Add a new field 'property_age' based on 'construction_year'. Make it computed.
+Add a computed field 'commission_amount' as 6% of the selling price in estate_account.
+Extend the offer model with a custom validation method when saving a record.
+Use delegation inheritance to link properties with a generic 'asset' model. What changes?
+
