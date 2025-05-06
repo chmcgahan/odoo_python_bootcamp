@@ -37,28 +37,24 @@ class Student:
 class Course:
     def __init__(self, name, capacity):
         self.name = name
-        self.__students = []
+        self.students = []
         self.__capacity = capacity
 
     def add_student(self, student):
-        if len(self.__students) < self.__capacity:
-            self.__students.append(student)
+        if len(self.students) < self.capacity:
+            self.students.append(student)
             print(f"{student.first_name} added to {self.name}")
         else:
             print(f"Cannot add {student.first_name}: {self.name} is full")
 
     def list_students(self):
-        for s in self.__students:
+        for s in self.students:
             print("-", s)
-
-    @property
-    def capacity(self):
-        return self.__capacity
 
     @capacity.setter
     def capacity(self, value):
-        if value >= len(self.__students):
-            self.__capacity = value
+        if value >= len(self.students):
+            self.capacity = value
         else:
             print("Can't set capacity below current enrollment.")
 
