@@ -37,26 +37,19 @@ class Student:
 class Course:
     def __init__(self, name, capacity):
         self.name = name
+        self.capacity = capacity
         self.students = []
-        self.__capacity = capacity
 
     def add_student(self, student):
         if len(self.students) < self.capacity:
             self.students.append(student)
-            print(f"{student.first_name} added to {self.name}")
+            print(f"{student.first_name if hasattr(student, 'first_name') else student} added to {self.name}")
         else:
-            print(f"Cannot add {student.first_name}: {self.name} is full")
+            print(f"Cannot add {student.first_name if hasattr(student, 'first_name') else student}: {self.name} is full")
 
     def list_students(self):
         for s in self.students:
             print("-", s)
-
-    @capacity.setter
-    def capacity(self, value):
-        if value >= len(self.students):
-            self.capacity = value
-        else:
-            print("Can't set capacity below current enrollment.")
 
 # CHALLENGE: Create a course with capacity 2, add 3 students, increase the capacity, then try again.
 
