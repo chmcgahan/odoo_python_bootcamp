@@ -5,18 +5,15 @@ OOP Bootcamp — Day 2 Exercises
 Each exercise focuses on a fundamental concept in object-oriented programming (OOP).
 """
 
-# ========== Exercise 1: Define a Simple Class ==========
+# ========== Exercise 1: Define a Simple Teacher Class ==========
 # Goal: Understand the basics of class creation and instantiation
+# The teacher has to have a first name, a last name, an age, and a list of subjects to teach
+# All these attributes can be used in a class 'def teach(self):...'
 
 class Teacher:
     def __init__(self, first_name, last_name, age, subjects):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.age = age
-        self.subjects = subjects
 
     def teach(self):
-        print(f"{self.first_name} {self.last_name} is teaching: {', '.join(self.subjects)}")
 
 # CHALLENGE: Create two teachers with different subjects and call their `teach()` method.
 
@@ -26,18 +23,12 @@ class Teacher:
 
 class Student:
     def __init__(self, first_name, last_name, birth_year):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.birth_year = birth_year
-        self.matricule = (last_name[:3] + first_name[:3]).upper()
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.matricule})"
 
     def __eq__(self, other):
-        return self.matricule == other.matricule
 
-# CHALLENGE: Create two students. Compare them. Print them. Try changing just one letter in the name.
+# CHALLENGE: Create two students. Compare them. Print them.
 
 
 # ========== Exercise 3: Encapsulation and Properties ==========
